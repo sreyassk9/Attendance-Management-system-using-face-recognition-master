@@ -1,141 +1,129 @@
-import pandas as pd
-from glob import glob
-import os
 import tkinter as tk
+from tkinter import *
+import os
 import csv
+import pyttsx3
+
+def text_to_speech(user_text):
+    engine = pyttsx3.init()
+    engine.say(user_text)
+    engine.runAndWait()
+
+attendance_path = "D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance"
+
+def show_attendance(subject, date):
+    if subject == "" or date == "":
+        t = "Please enter the subject and date!!!"
+        # Display error message or perform text-to-speech
+        return
+
+    attendance_file = os.path.join(attendance_path, subject, f"{subject}_{date}.csv")
+    if not os.path.isfile(attendance_file):
+        t = f"No attendance record found for {subject} on {date}!"
+        # Display error message or perform text-to-speech
+        return
+
+    root = Tk()
+    root.title(f"Attendance of {subject} - {date}")
+    root.configure(background="black")
+
+    with open(attendance_file, newline="") as file:
+        reader = csv.reader(file)
+        r = 0
+
+        for col in reader:
+            c = 0
+            for row in col:
+                label = Label(
+                    root,
+                    width=10,
+                    height=1,
+                    fg="yellow",
+                    font=("times", 15, "bold"),
+                    bg="black",
+                    text=row,
+                    relief=RIDGE,
+                )
+                label.grid(row=r, column=c)
+                c += 1
+            r += 1
+
+    root.mainloop()
 
 def subjectchoose(text_to_speech):
-    def calculate_attendance():
-        j = 0
-        Subject = tx.get()
-        if Subject == "":
-            t = 'Please enter the subject name.'
-            text_to_speech(t)
-        os.chdir(
-            r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}"
-        )
-        filenames = glob(
-            r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}\{Subject}*.csv"
-        )
-        df = [pd.read_csv(f) for f in filenames]
-        newdf = df[j]
-        for i in range(1, len(df)):
-            newdf = newdf.merge(df[i], how="outer")
-        newdf.fillna(0, inplace=True)
-        newdf["Attendance"] = 0
-        for i in range(len(newdf)):
-            newdf.at[i, "Attendance"] = str(int(round(newdf.iloc[i, 2:-1].mean() * 100))) + '%'
-        newdf.to_csv("attendance.csv", index=False)
+    def on_show_attendance():
+        subject = subject_entry.get()
+        date = date_entry.get()
+        show_attendance(subject, date)
 
-        root = tk.Tk()
-        root.title("Attendance of " + Subject)
-        root.configure(background="black")
-        cs = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}\{Subject}*.csv"
-        with open(cs) as file:
-            reader = csv.reader(file)
-            r = 0
+    # Create the subject window
+    subject_window = Tk()
+    subject_window.title("Subject and Date")
+    subject_window.geometry("500x300")
+    subject_window.configure(background="black")
 
-            for col in reader:
-                c = 0
-                for row in col:
-
-                    label = tk.Label(
-                        root,
-                        width=10,
-                        height=1,
-                        fg="yellow",
-                        font=("times", 15, " bold "),
-                        bg="black",
-                        text=row,
-                        relief=tk.RIDGE,
-                    )
-                    label.grid(row=r, column=c)
-                    c += 1
-                r += 1
-        root.mainloop()
-        print(newdf)
-
-    subject = tk.Tk()
-    subject.title("Subject...")
-    subject.geometry("580x320")
-    subject.resizable(0, 0)
-    subject.configure(background="black")
-
-    titl = tk.Label(subject, bg="black", relief=tk.RIDGE, bd=10, font=("arial", 30))
-    titl.pack(fill=tk.X)
-
-    titl = tk.Label(
-        subject,
-        text="Which Subject of Attendance?",
-        bg="black",
-        fg="green",
-        font=("arial", 25),
-    )
-    titl.place(x=100, y=12)
-
-    def Attf():
-        sub = tx.get()
-        if sub == "":
-            t = "Please enter the subject name!!!"
-            text_to_speech(t)
-        else:
-            os.startfile(
-                r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{sub}"
-            )
-
-    attf = tk.Button(
-        subject,
-        text="Check Sheets",
-        command=Attf,
-        bd=7,
-        font=("times new roman", 15),
-        bg="black",
-        fg="yellow",
-        height=2,
-        width=10,
-        relief=tk.RIDGE,
-    )
-    attf.place(x=360, y=170)
-
-    sub = tk.Label(
-        subject,
-        text="Enter Subject",
-        width=10,
-        height=2,
-        bg="black",
-        fg="yellow",
-        bd=5,
-        relief=tk.RIDGE,
-        font=("times new roman", 15),
-    )
-    sub.place(x=50, y=100)
-
-    tx = tk.Entry(
-        subject,
+    subject_label = Label(
+        subject_window,
+        text="Enter the Subject",
         width=15,
+        height=2,
+        bg="black",
+        fg="yellow",
+        bd=5,
+        relief=RIDGE,
+        font=("times new roman", 15),
+    )
+    subject_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+    subject_entry = Entry(
+        subject_window,
+        width=20,
         bd=5,
         bg="black",
         fg="yellow",
-        relief=tk.RIDGE,
-        font=("times", 30, "bold"),
+        relief=RIDGE,
+        font=("times", 15, "bold"),
     )
-    tx.place(x=190, y=100)
+    subject_entry.grid(row=0, column=1, padx=10, pady=10, sticky="w")
 
-    fill_a = tk.Button(
-        subject,
-        text="View Attendance",
-        command=calculate_attendance,
+    date_label = Label(
+        subject_window,
+        text="Enter the Date",
+        width=15,
+        height=2,
+        bg="black",
+        fg="yellow",
+        bd=5,
+        relief=RIDGE,
+        font=("times new roman", 15),
+    )
+    date_label.grid(row=1, column=0, padx=10, pady=10, sticky="e")
+
+    date_entry = Entry(
+        subject_window,
+        width=20,
+        bd=5,
+        bg="black",
+        fg="yellow",
+        relief=RIDGE,
+        font=("times", 15, "bold"),
+    )
+    date_entry.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+
+    show_button = Button(
+        subject_window,
+        text="Show Attendance",
+        command=on_show_attendance,
         bd=7,
         font=("times new roman", 15),
         bg="black",
         fg="yellow",
         height=2,
-        width=12,
-        relief=tk.RIDGE,
+        width=15,
+        relief=RIDGE,
     )
-    fill_a.place(x=195, y=170)
-    subject.mainloop()
+    show_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
+    subject_window.mainloop()
 
-# Example usage
 subjectchoose(text_to_speech)

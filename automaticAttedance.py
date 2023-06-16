@@ -11,17 +11,13 @@ import time
 import tkinter.ttk as tkk
 import tkinter.font as font
 
-haarcasecade_path = "D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\haarcascade_frontalface_default.xml"
-trainimagelabel_path = (
-    "D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImageLabel\Trainner.yml"
-)
-trainimage_path = "D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImage"
-studentdetail_path = (
-    "D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\StudentDetails\studentdetails.csv"
-)
-attendance_path = "D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance"
+haarcasecade_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\haarcascade_frontalface_default.xml"
+trainimagelabel_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImageLabel\Trainner.yml"
+trainimage_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImage"
+studentdetail_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\StudentDetails\studentdetails.csv"
+attendance_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance"
 # for choose subject and fill attendance
-def subjectChoose(text_to_speech):
+def subjectchoose(text_to_speech):
     def FillAttendance():
         sub = tx.get()
         now = time.time()
@@ -111,21 +107,14 @@ def subjectChoose(text_to_speech):
                 attendance["Attendance"] = "P"
                 attendance[date] = 1
                 date = datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
-                timeStamp = datetime.datetime.fromtimestamp(ts).strftime("%H:%M:%S")
-                Hour, Minute, Second = timeStamp.split(":")
-                #fileName = "Attendance/" + Subject + ".csv"
+                
                 path = os.path.join(attendance_path, Subject)
+                os.makedirs(path, exist_ok=True)
                 fileName = (
                     f"{path}/"
                     + Subject
                     + "_"
                     + date
-                    + "_"
-                    + Hour
-                    + "-"
-                    + Minute
-                    + "-"
-                    + Second
                     + ".csv"
                 )
                 attendance = attendance.drop_duplicates(["Enrollment"], keep="first")

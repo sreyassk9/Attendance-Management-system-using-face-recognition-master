@@ -16,7 +16,6 @@ import show_attendance
 import takeImage
 import trainImage
 import automaticAttedance
-
 # engine = pyttsx3.init()
 # engine.say("Welcome!")
 # engine.say("Please browse through your options..")
@@ -303,7 +302,7 @@ r.place(x=100, y=520)
 
 
 def automatic_attedance():
-    automaticAttedance.subjectChoose(text_to_speech)
+    automaticAttedance.subjectchoose(text_to_speech)
 
 
 r = tk.Button(
