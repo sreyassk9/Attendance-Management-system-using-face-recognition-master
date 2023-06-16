@@ -1,21 +1,15 @@
-import pandas as pd
-from glob import glob
-import os
-import tkinter as tk
-import csv
-
 def subjectchoose(text_to_speech):
     def calculate_attendance():
-        j = 0
+        j=0
         Subject = tx.get()
-        if Subject == "":
-            t = 'Please enter the subject name.'
+        if Subject=="":
+            t='Please enter the subject name.'
             text_to_speech(t)
         os.chdir(
-            r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}"
+            f"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}"
         )
         filenames = glob(
-            r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}\{Subject}*.csv"
+            f"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\\{Subject}\{Subject}*.csv"
         )
         df = [pd.read_csv(f) for f in filenames]
         newdf = df[j]
@@ -24,13 +18,14 @@ def subjectchoose(text_to_speech):
         newdf.fillna(0, inplace=True)
         newdf["Attendance"] = 0
         for i in range(len(newdf)):
-            newdf.at[i, "Attendance"] = str(int(round(newdf.iloc[i, 2:-1].mean() * 100))) + '%'
+            newdf["Attendance"].iloc[i] = str(int(round(newdf.iloc[i, 2:-1].mean() * 100)))+'%'
+            #newdf.sort_values(by=['Enrollment'],inplace=True)
         newdf.to_csv("attendance.csv", index=False)
 
-        root = tk.Tk()
-        root.title("Attendance of " + Subject)
+        root = tkinter.Tk()
+        root.title("Attendance of "+Subject)
         root.configure(background="black")
-        cs = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}\{Subject}*.csv"
+        cs = f"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{Subject}\{Subject}*.csv"
         with open(cs) as file:
             reader = csv.reader(file)
             r = 0
@@ -39,7 +34,7 @@ def subjectchoose(text_to_speech):
                 c = 0
                 for row in col:
 
-                    label = tk.Label(
+                    label = tkinter.Label(
                         root,
                         width=10,
                         height=1,
@@ -47,7 +42,7 @@ def subjectchoose(text_to_speech):
                         font=("times", 15, " bold "),
                         bg="black",
                         text=row,
-                        relief=tk.RIDGE,
+                        relief=tkinter.RIDGE,
                     )
                     label.grid(row=r, column=c)
                     c += 1
@@ -55,15 +50,19 @@ def subjectchoose(text_to_speech):
         root.mainloop()
         print(newdf)
 
-    subject = tk.Tk()
+    subject = Tk()
+    # windo.iconbitmap("AMS.ico")
     subject.title("Subject...")
     subject.geometry("580x320")
     subject.resizable(0, 0)
     subject.configure(background="black")
-
-    titl = tk.Label(subject, bg="black", relief=tk.RIDGE, bd=10, font=("arial", 30))
-    titl.pack(fill=tk.X)
-
+    # subject_logo = Image.open("UI_Image/0004.png")
+    # subject_logo = subject_logo.resize((50, 47), Image.ANTIALIAS)
+    # subject_logo1 = ImageTk.PhotoImage(subject_logo)
+    titl = tk.Label(subject, bg="black", relief=RIDGE, bd=10, font=("arial", 30))
+    titl.pack(fill=X)
+    # l1 = tk.Label(subject, image=subject_logo1, bg="black",)
+    # l1.place(x=100, y=10)
     titl = tk.Label(
         subject,
         text="Which Subject of Attendance?",
@@ -76,12 +75,13 @@ def subjectchoose(text_to_speech):
     def Attf():
         sub = tx.get()
         if sub == "":
-            t = "Please enter the subject name!!!"
+            t="Please enter the subject name!!!"
             text_to_speech(t)
         else:
             os.startfile(
-                r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{sub}"
+            f"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance\{sub}"
             )
+
 
     attf = tk.Button(
         subject,
@@ -93,7 +93,7 @@ def subjectchoose(text_to_speech):
         fg="yellow",
         height=2,
         width=10,
-        relief=tk.RIDGE,
+        relief=RIDGE,
     )
     attf.place(x=360, y=170)
 
@@ -105,7 +105,7 @@ def subjectchoose(text_to_speech):
         bg="black",
         fg="yellow",
         bd=5,
-        relief=tk.RIDGE,
+        relief=RIDGE,
         font=("times new roman", 15),
     )
     sub.place(x=50, y=100)
@@ -116,7 +116,7 @@ def subjectchoose(text_to_speech):
         bd=5,
         bg="black",
         fg="yellow",
-        relief=tk.RIDGE,
+        relief=RIDGE,
         font=("times", 30, "bold"),
     )
     tx.place(x=190, y=100)
@@ -131,11 +131,7 @@ def subjectchoose(text_to_speech):
         fg="yellow",
         height=2,
         width=12,
-        relief=tk.RIDGE,
+        relief=RIDGE,
     )
     fill_a.place(x=195, y=170)
     subject.mainloop()
-
-
-# Example usage
-subjectchoose(text_to_speech)
