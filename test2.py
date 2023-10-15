@@ -2,12 +2,7 @@ import os
 import cv2
 import numpy as np
 
-haarcasecade_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\haarcascade_frontalface_default.xml"
-trainimagelabel_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImageLabel\Trainner.yml"
-trainimage_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImage"
-studentdetail_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\StudentDetails\studentdetails.csv"
-attendance_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance"
-# for choose subject and fill attendance
+
 def UntrainAllImages(trainimage_path, trainimagelabel_path, message, text_to_speech):
     recognizer = cv2.face.LBPHFaceRecognizer_create()
 

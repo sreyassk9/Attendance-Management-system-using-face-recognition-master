@@ -41,7 +41,7 @@ attendance_path = "D:\Downloads\Attendance-Management-system-using-face-recognit
 
 window = Tk()
 window.title("Face recognizer")
-window.geometry("1280x720")
+window.geometry("1960x1080")
 dialog_title = "QUIT"
 dialog_text = "Are you sure want to close?"
 window.configure(background="black")

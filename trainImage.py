@@ -6,11 +6,7 @@ import datetime
 import time
 from PIL import ImageTk, Image
 
-haarcasecade_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\haarcascade_frontalface_default.xml"
-trainimagelabel_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImageLabel\Trainner.yml"
-trainimage_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\TrainingImage"
-studentdetail_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\StudentDetails\studentdetails.csv"
-attendance_path = r"D:\Downloads\Attendance-Management-system-using-face-recognition-master (1)\Attendance-Management-system-using-face-recognition-master\Attendance"
+
 # for choose subject and fill attendance
 # Train Image
 def TrainImage(haarcasecade_path, trainimage_path, trainimagelabel_path, message,text_to_speech):
